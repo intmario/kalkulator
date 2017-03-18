@@ -2,11 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.math.NumberUtils;
 
 class ExpressionInterpreter
 {
-	private static String numberMatcher = "\\d+\\.\\d+|\\d+";
-	private static String operatorMatcher = "\\+|\\-|\\/|\\*";
+	private static String numberMatcher = "\\d+\\.\\d+|\\d+|\\-\\d+\\.\\d+|\\-\\d+";
+	private static String operatorMatcher = "\\+|\\-\\D|\\/|\\*";
 	
 	private List<Double> numbers = new ArrayList<Double>();
 	private List<String> operators = new ArrayList<String>();
@@ -51,8 +52,9 @@ class ExpressionInterpreter
 		Matcher numberMatcher = Pattern.compile(ExpressionInterpreter.numberMatcher).matcher(this.expression);
 		Matcher operatorMatcher = Pattern.compile(ExpressionInterpreter.operatorMatcher).matcher(this.expression);
 		
+		//Tu u¿yta jest biblioteka
 		while(numberMatcher.find())
-			this.numbers.add(Double.parseDouble(numberMatcher.group()));
+			this.numbers.add(NumberUtils.createDouble(numberMatcher.group()));
 		
 		while(operatorMatcher.find())
 			this.operators.add(operatorMatcher.group());
